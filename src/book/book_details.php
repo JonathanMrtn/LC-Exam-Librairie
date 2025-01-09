@@ -58,16 +58,16 @@ require_once ('../template/header.php');
 
             </div>
         </div>
-    </body>
-    <script>
-        function showDeleteConfirmation(bookId) {
-            if (confirm("Êtes-vous sûr de vouloir supprimer ce livre ?")) {
-                // Si l'utilisateur confirme la suppression, redirigez-le vers la page de suppression avec l'ID du livre.
-                window.location.href = "delete_book.php?book_id=" + bookId;
-            } else {
-                // Si l'utilisateur annule la suppression, ne faites rien.
+        <script>
+            function showDeleteConfirmation(bookId) {
+                if (confirm("Êtes-vous sûr de vouloir supprimer ce livre ?")) {
+                    // Si l'utilisateur confirme la suppression, redirigez-le vers la page de suppression avec l'ID du livre.
+                    window.location.href = "delete_book.php?book_id=" + bookId;
+                } else {
+                    // Si l'utilisateur annule la suppression, ne faites rien.
+                }
             }
-        }
-    </script>
-</html>
+        </script>
+<?php
+require_once('../template/footer.php');
 

@@ -55,51 +55,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
+$titre = "Ajouter un Livre";
+require_once ('../template/header.php');
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Ajouter un Livre</title>
-    <link rel="stylesheet" type="text/css" href="../../css/style.css">
-</head>
-<body>
-<header>
-        <img class="logo" src="../../image/logo.png" alt="Logo Librairie XYZ">
-        <h1>Ajouter un livre - Librairie XYZ</h1>
-    </header>
+        <?php if ($success) : ?>
+            <p>Le livre a été ajouté avec succès.</p>
+            <button onclick="window.location.href = 'books.php'">Retour à la gestion des livres </button>
+        <?php else : ?>
+            <?php if (!empty($errors)) : ?>
+                <ul>
+                    <?php foreach ($errors as $error) : ?>
+                        <li><?= $error ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
 
-    <?php if ($success) : ?>
-        <p>Le livre a été ajouté avec succès.</p>
-        <button onclick="window.location.href = 'books.php'">Retour à la gestion des livres </button>
-    <?php else : ?>
-        <?php if (!empty($errors)) : ?>
-            <ul>
-                <?php foreach ($errors as $error) : ?>
-                    <li><?= $error ?></li>
-                <?php endforeach; ?>
-            </ul>
+            <form method="post">
+                <label for="cover">URL de l'image :</label>
+                <input type="text" name="cover" required>
+                <label for="title">Titre :</label>
+                <input type="text" name="title" required>
+                <br>
+                <label for="author">Auteur :</label>
+                <input type="text" name="author" required>
+                <br>
+                <label for="description">Description :</label>
+                <textarea name="description" required></textarea>
+                <br>
+                <label for="date_publication">Date de Publication :</label>
+                <input type="date" name="date_publication" required>
+                <br>
+                <label for="isbn">ISBN :</label>
+                <input type="text" name="isbn" required>
+                <br>
+                <button type="submit">Ajouter le Livre</button>
+            </form>
         <?php endif; ?>
-
-        <form method="post">
-            <label for="cover">URL de l'image :</label>
-            <input type="text" name="cover" required>
-            <label for="title">Titre :</label>
-            <input type="text" name="title" required>
-            <br>
-            <label for="author">Auteur :</label>
-            <input type="text" name="author" required>
-            <br>
-            <label for="description">Description :</label>
-            <textarea name="description" required></textarea>
-            <br>
-            <label for="date_publication">Date de Publication :</label>
-            <input type="date" name="date_publication" required>
-            <br>
-            <label for="isbn">ISBN :</label>
-            <input type="text" name="isbn" required>
-            <br>
-            <button type="submit">Ajouter le Livre</button>
-        </form>
-    <?php endif; ?>
-</body>
-</html>
+<?php
+require_once('../template/footer.php');

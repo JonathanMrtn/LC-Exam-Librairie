@@ -33,5 +33,5 @@ include('../template/header.php');
                 </div>
             </div>
         </div>
-    </body>
-</html>
+<?php
+require_once('../template/footer.php');

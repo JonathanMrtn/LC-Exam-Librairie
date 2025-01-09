@@ -1,12 +1,12 @@
 <?php
-require('config.php');
+require('../../config.php');
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
 // Vérifiez si l'utilisateur est authentifié et a le rôle approprié (par exemple, "admin" ou "gestionnaire") pour accéder à cette fonctionnalité.
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header('Location: login.php');
+    header('Location: ../auth/login.php');
     exit();
 }
 
@@ -51,39 +51,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     exit();
 }
+$titre = "Modifier un Livre";
+require_once ('../template/header.php');
 ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Modifier un Livre</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-</head>
-<body>
-<header>
-        <h1>Modifier un livre - Librairie XYZ</h1>
-    </header>
-    <form method="post">
-        <label for="title">Titre :</label>
-        <input type="text" name="title" value="<?php echo $book['titre']; ?>" required>
-        <br>
-        <label for="author">Auteur :</label>
-        <input type="text" name="author" value="<?php echo $book['auteur']; ?>" required>
-        <br>
-        <label for="description">Description :</label>
-        <textarea name="description" required><?php echo $book['description']; ?></textarea>
-        <br>
-        <label for="date_publication">Date de Publication :</label>
-        <input type="date" name="date_publication" value="<?php echo $book['date_publication']; ?>" required>
-        <br>
-        <label for="isbn">ISBN :</label>
-        <input type="text" name="isbn" value="<?php echo $book['isbn']; ?>" required>
-        <br>
-        <label for="cover_url">URL de l'image :</label>
-        <input type="text" name="cover_url" value="<?= htmlspecialchars($book['photo_url']); ?>" required>
-        <br>
-        <button type="submit">Enregistrer les Modifications</button>
-    </form>
-    <button onclick="window.location.href ='books.php'">Retour à la Liste des Livres</a>
-</body>
-</html>
+        <form method="post">
+            <label for="title">Titre :</label>
+            <input type="text" name="title" value="<?php echo $book['titre']; ?>" required>
+            <br>
+            <label for="author">Auteur :</label>
+            <input type="text" name="author" value="<?php echo $book['auteur']; ?>" required>
+            <br>
+            <label for="description">Description :</label>
+            <textarea name="description" required><?php echo $book['description']; ?></textarea>
+            <br>
+            <label for="date_publication">Date de Publication :</label>
+            <input type="date" name="date_publication" value="<?php echo $book['date_publication']; ?>" required>
+            <br>
+            <label for="isbn">ISBN :</label>
+            <input type="text" name="isbn" value="<?php echo $book['isbn']; ?>" required>
+            <br>
+            <label for="cover_url">URL de l'image :</label>
+            <input type="text" name="cover_url" value="<?= htmlspecialchars($book['photo_url']); ?>" required>
+            <br>
+            <button type="submit">Enregistrer les Modifications</button>
+        </form>
+        <button onclick="window.location.href ='books.php'">Retour à la Liste des Livres</a>
+<?php
+require_once('../template/footer.php');

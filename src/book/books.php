@@ -1,4 +1,5 @@
-<?php $titre = "Liste des Livres - Librairie XYZ";
+<?php 
+$titre = "Liste des Livres - Librairie XYZ";
 $style = "
         body {
             font-family: 'Arial', sans-serif;
@@ -77,7 +78,7 @@ require_once('../template/header.php');
 
             if ($stmt) {
                 echo "<table>";
-                echo "<tr><th>Image</th><th>Titre</th><th>Auteur</th><th>Date de publication</th><th>Statut</th><th>Détails</th></tr>";
+                echo "<tr><th>Image</th><th>Titre</th><th>Auteur</th><th>Date de publication</th><th>Statut</th><th>Emprunt</th><th>Détails</th></tr>";
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo "<tr>";
                     echo '<td><img class="book-image" src="' . $row['photo_url'] . '" alt="' . $row['titre'] . '"></td>';
@@ -85,6 +86,12 @@ require_once('../template/header.php');
                     echo "<td>{$row['auteur']}</td>";
                     echo "<td>{$row['date_publication']}</td>";
                     echo "<td>{$row['statut']}</td>";
+                    // echo '<td><a href="../emprunt/add_emprunt.php?id_livre=' . $row['id'] . '">Faire un emprunt</a></td>';
+                    if ($row['statut'] === 'disponible') {
+                        echo '<td><a class="btn btn-primary" href="../emprunt/add_emprunt.php?id_livre=' . $row['id'] . '">Faire un emprunt</a></td>';
+                    } else {
+                        echo '<td><button class="btn btn-secondary" title="Vous ne pouvez pas emprunter un livre déjà emprunté" disabled>Faire un emprunt</button></td>';
+                    }
                     echo '<td><a href="book_details.php?id=' . $row['id'] . '">Voir les détails</a></td>';
                     echo "</tr>";
                 }

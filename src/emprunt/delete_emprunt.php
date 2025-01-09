@@ -10,7 +10,7 @@ if (!isset($_GET['emprunt_id'])) {
 $emprunt_id = $_GET['emprunt_id'];
 
 // Vérifiez si l'utilisateur est authentifié et a le rôle approprié (par exemple, "admin" ou "gestionnaire") pour accéder à cette fonctionnalité.
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+if (!isset($_SESSION['user_id'])) {
     header('Location: ../auth/login.php');
     exit();
 }

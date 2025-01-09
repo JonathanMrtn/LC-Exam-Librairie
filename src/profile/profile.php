@@ -30,8 +30,10 @@ include('../template/header.php');
                     <p><strong>Rôle :</strong> <?php echo $userInfo['role']; ?></p>
                     <p><strong>Date d'inscription :</strong> <?php echo date('d/m/Y', strtotime($userInfo['date_inscription'])); ?></p>
                     <!-- Affichez d'autres informations du profil ici -->
-                    <button class="btn btn-primary" onclick="window.location.href ='edit_profile.php'">Modifier le Profil</button>
-                    <button class="btn btn-secondary" onclick="window.location.href ='../../index.php'">Retour à l'accueil</button>
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button class="btn btn-success" style="width: auto; display: inline-block;" onclick="window.location.href = 'edit_profile.php'">Modifier le profil</button>
+                        <button class="btn btn-secondary" style="width: auto; display: inline-block;" onclick="window.location.href = '../../index.php'">Retour à l'accueil</button>
+                    </div>
                 </div>
             </div>
         </div>

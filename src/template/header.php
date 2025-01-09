@@ -31,11 +31,21 @@
                     <li class="nav-item">
                         <a class="nav-link" href="../../src/profile/profile.php">Profil</a>
                     </li>
+                    <?php 
+                    if (!empty($_SESSION['role']))
+                    {
+                        if ($_SESSION['role'] == 'admin') {
+                            echo '<li class="nav-item">
+                                <a class="nav-link" href="../../src/backoffice/backoffice.php">BACKOFFICE</a>
+                            </li>';
+                        }
+                    }
+                    ?>
                     <li class="nav-item">
                         <a class="nav-link" href="../../src/auth/logout.php">Déconnexion</a>
                     </li>
                 </ul>
             </div>
         </nav>
-        <h1><?= (empty($titre) ? "Librairie XYZ" : $titre . "- Librairie XYZ") ?></h1>
+        <h1><?= (empty($titre) ? "Librairie XYZ" : $titre . " - Librairie XYZ") ?></h1>
     </header>

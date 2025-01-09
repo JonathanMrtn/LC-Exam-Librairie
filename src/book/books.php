@@ -1,4 +1,13 @@
 <?php 
+
+
+require('../../config.php');
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../auth/login.php');
+    exit();
+}
+
 $titre = "Liste des Livres - Librairie XYZ";
 $style = "
         body {
@@ -100,11 +109,13 @@ require_once('../template/header.php');
                 echo "Erreur lors de la récupération des livres.";
             }
             ?>
-    <!-- Bouton "Ajouter un livre" visible uniquement pour les admins -->
-            <?php if ($_SESSION['role'] === 'admin') : ?>
-                <button onclick="window.location.href = 'add_book.php'">Ajouter un livre</button>
-            <?php endif; ?>
-            <button onclick="window.location.href = '../../index.php'">Retour à l'accueil</button>
+            <div style="text-align: center; margin-top: 20px;">
+                <!-- Bouton "Ajouter un livre" visible uniquement pour les admins -->
+                <?php if ($_SESSION['role'] === 'admin') : ?>
+                    <button class="btn btn-success" style="width: auto; display: inline-block;" onclick="window.location.href = 'add_book.php'">Ajouter un livre</button>
+                <?php endif; ?>
+                <button class="btn btn-secondary" style="width: auto; display: inline-block;" onclick="window.location.href = '../../index.php'">Retour à l'accueil</button>
+            </div>
             
         </div>
 <?php

@@ -1,5 +1,15 @@
 
 <?php
+require('../../config.php');
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../auth/login.php');
+    exit();
+}
+
 include('../template/header.php');
 ?>
         <div class="container mt-5">
@@ -9,14 +19,16 @@ include('../template/header.php');
                 </div>
                 <div class="card-body">
                     <form method="post" action="update_profile.php">
-                        <label for="new_name">Nouveau Nom :</label>
-                        <input type="text" name="new_name" required>
-                        <br>
-                        <label for="new_email">Nouvel Email :</label>
-                        <input type="email" name="new_email" required>
-                        <br>
+                        <div class="form-group">
+                            <label for="new_name">Nouveau Nom :</label>
+                            <input type="text" class="form-control" name="new_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="new_email">Nouvel Email :</label>
+                            <input type="email" class="form-control" name="new_email" required>
+                        </div>
                         <!-- Ajoutez d'autres champs à mettre à jour ici -->
-                        <button type="submit">Enregistrer les Modifications</button>
+                        <button type="submit" class="btn btn-primary mt-3">Enregistrer les Modifications</button>
                     </form>
                     <button onclick="window.location.href ='profile.php'">Retour au Profil</a>
                     <button onclick="window.location.href ='../../index.php'">Retour à l'accueil</a>

@@ -1,4 +1,13 @@
 <?php 
+require('../../config.php');
+
+
+// Vérifiez si l'utilisateur est authentifié et a le rôle approprié (par exemple, "admin" ou "gestionnaire") pour accéder à cette fonctionnalité.
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../auth/login.php');
+    exit();
+}
+
 $titre = "Liste des Emprunts - Librairie XYZ";
 $style = "
         body {
@@ -71,7 +80,6 @@ require_once('../template/header.php');
         <div class="container">
             <!-- Affichage des emprunts depuis la base de données -->
             <?php
-            require('../../config.php');
 
             if ($_SESSION['role'] === 'admin') {
                 echo "<p>Ce qui figure ici correspond à la liste de tous les emprunts de tous les utilisateur car vous êtes admin.</p>";
@@ -112,7 +120,8 @@ require_once('../template/header.php');
                         echo "<td>Livre inconnu, >Auteur inconnu, Date de publication inconnue</td>";
                     }
                     $date_emprunt = new DateTime($row['date_emprunt']);
-                    $date_rendu = $date_emprunt->add(new DateInterval('P30D'));
+                    $date_rendu = new DateTime($row['date_emprunt']);
+                    $date_rendu = $date_rendu->add(new DateInterval('P30D'));
                     $date_actuelle = new DateTime();
                     $intervalDateEmprunt = $date_emprunt->diff($date_actuelle);
                     if ($intervalDateEmprunt->days > 30) {
@@ -150,11 +159,17 @@ require_once('../template/header.php');
                 echo "Erreur lors de la récupération des emprunts.";
             }
             ?>
-    <!-- Bouton "Ajouter un emprunt" visible uniquement pour les admins -->
-            <button onclick="window.location.href = 'add_emprunt.php'">Ajouter un emprunt</button>
-            <button onclick="window.location.href = '../../index.php'">Retour à l'accueil</button>
-            
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn btn-success" style="width: auto; display: inline-block;" onclick="window.location.href = 'add_emprunt.php'">Faire un emprunt</button>
+                <button class="btn btn-secondary" style="width: auto; display: inline-block;" onclick="window.location.href = '../../index.php'">Retour à l'accueil</button>
+            </div>
         </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
 <?php
 require_once('../template/footer.php');
 ?>

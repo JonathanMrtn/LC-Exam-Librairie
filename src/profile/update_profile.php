@@ -11,16 +11,18 @@ if (!isset($_SESSION['user_id'])) {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Récupérez les données soumises dans le formulaire
-    $newName = $_POST['new_name'];
+    $newLastname = $_POST['new_lastname'];
+    $newFirstname = $_POST['new_firstname'];
     $newEmail = $_POST['new_email'];
 
     // Effectuez des validations nécessaires sur les données, par exemple, vérifiez si l'email est unique, etc.
 
     // Mettez à jour les informations de l'utilisateur dans la base de données
-    $query = "UPDATE utilisateurs SET nom = :new_name, email = :new_email WHERE id = :user_id";
+    $query = "UPDATE utilisateurs SET nom = :new_lastname, prenom = :new_firstname, email = :new_email WHERE id = :user_id";
     $stmt = $pdo->prepare($query);
     $stmt->execute(array(
-        ':new_name' => $newName,
+        ':new_lastname' => $newLastname,
+        ':new_firstname' => $newFirstname,
         ':new_email' => $newEmail,
         ':user_id' => $_SESSION['user_id']
     ));

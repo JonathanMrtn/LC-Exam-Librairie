@@ -91,6 +91,12 @@ require_once('../template/header.php');
                     </div>
                     <!-- ... Autres statistiques ... -->
                 </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
             </div>
         </div>
 <?php

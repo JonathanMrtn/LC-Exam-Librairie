@@ -10,7 +10,7 @@ if (empty($_GET['emprunt_id'])) {
 $emprunt_id = $_GET['emprunt_id'];
 
 // Vérifiez si l'utilisateur est authentifié et a le rôle approprié (par exemple, "admin" ou "gestionnaire") pour accéder à cette fonctionnalité.
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+if (!isset($_SESSION['user_id'])) {
     header('Location: ../auth/login.php');
     exit();
 }
@@ -56,12 +56,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm']) && $_POST[
 
 }
 
-$titre = "Confirmation de suppression";
+$titre = "Confirmation du rendu";
 require_once ('../template/header.php');
 ?>
         <div class="container mt-5">
-            <h1 class="text-danger">Confirmation de suppression</h1>
-            <p>Êtes-vous sûr de vouloir supprimer cet emprunt ?</p>
+            <h1 class="text-danger">Confirmation du rendu</h1>
+            <p>Êtes-vous sûr de vouloir rendre cet emprunt ?</p>
             <form method="post" action="return_emprunt.php?emprunt_id=<?php echo $emprunt_id; ?>">
                 <input type="hidden" name="confirm" value="yes">
                 <button type="submit" class="btn btn-danger">Oui</button>

@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
         die('Invalid CSRF token');
     }
-    
+
     $email = $_POST['email'];
     $password = $_POST['password'];
 
@@ -40,21 +40,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Connexion</title>
-    <link rel="stylesheet" type="text/css" href="../../css/style.css">
-</head>
-<body>
-<header>
-        <h1>Connexion - Librairie XYZ</h1>
-    </header>
-    <form method="post" action="">
-        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
-        <input type="text" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Mot de passe" required>
-        <button type="submit">Se connecter</button>
-        <p>Vous n'avez pas de compte ? <a href="register.php">S'inscrire</a></p>
-    </form>
-    <?php if (isset($error)) { echo "<p>$error</p>"; } ?>
-</body>
+    <head>
+        <title>Connexion</title>
+        <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    </head>
+    <body>
+        <header>
+            <h1>Connexion - Librairie XYZ</h1>
+        </header>
+        <?php if (isset($error)) { ?>
+        <div class="alert alert-danger" role="alert" style="text-align: center;">
+            <?php echo $error; ?>
+        </div>
+        <?php } ?>
+        <form method="post" action="">
+            <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
+            <input type="text" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Mot de passe" required>
+            <button type="submit">Se connecter</button>
+            <p>Vous n'avez pas de compte ? <a href="register.php">S'inscrire</a></p>
+        </form>
+    </body>
 </html>

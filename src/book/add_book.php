@@ -59,17 +59,22 @@ $titre = "Ajouter un Livre";
 require_once ('../template/header.php');
 ?>
         <?php if ($success) : ?>
-            <p>Le livre a été ajouté avec succès.</p>
-            <button onclick="window.location.href = 'books.php'">Retour à la gestion des livres </button>
+            <div class="alert alert-success text-center" role="alert" style="margin-top: 20px;">
+                Le livre a été ajouté avec succès.
+            </div>
+            <div class="text-center" style="margin-top: 20px;">
+                <button class="btn btn-primary btn-sm" style="width: auto;" onclick="window.location.href = 'books.php'">Retour à la liste des livres</button>
+            </div>
         <?php else : ?>
             <?php if (!empty($errors)) : ?>
-                <ul>
-                    <?php foreach ($errors as $error) : ?>
-                        <li><?= $error ?></li>
-                    <?php endforeach; ?>
-                </ul>
+                <div class="alert alert-danger" role="alert">
+                    <ul>
+                        <?php foreach ($errors as $error) : ?>
+                            <li><?= $error ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
             <?php endif; ?>
-
             <form method="post">
                 <label for="cover">URL de l'image :</label>
                 <input type="text" name="cover" required>
@@ -90,6 +95,13 @@ require_once ('../template/header.php');
                 <br>
                 <button type="submit">Ajouter le Livre</button>
             </form>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
         <?php endif; ?>
 <?php
 require_once('../template/footer.php');

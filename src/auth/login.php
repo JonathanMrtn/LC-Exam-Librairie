@@ -1,7 +1,17 @@
 <?php
 require('../../config.php');
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+$csrf_token = $_SESSION['csrf_token'];
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die('Invalid CSRF token');
+    }
+    
     $email = $_POST['email'];
     $password = $_POST['password'];
 
@@ -14,6 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($user && password_verify($password, $user['mot_de_passe'])) {
         // Mot de passe correct, connecter l'utilisateur
         session_start();
+        
+       
         $_SESSION['user'] = $email;
         $_SESSION['prenom'] = $user['prenom'];
         $_SESSION['role'] = $user['role'];
@@ -37,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <h1>Connexion - Librairie XYZ</h1>
     </header>
     <form method="post" action="">
+        <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
         <input type="text" name="email" placeholder="Email" required>
         <input type="password" name="password" placeholder="Mot de passe" required>
         <button type="submit">Se connecter</button>

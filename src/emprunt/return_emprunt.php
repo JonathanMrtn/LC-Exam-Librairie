@@ -65,8 +65,8 @@ require_once ('../template/header.php');
             <form method="post" action="return_emprunt.php?emprunt_id=<?php echo $emprunt_id; ?>">
                 <input type="hidden" name="confirm" value="yes">
                 <button type="submit" class="btn btn-danger">Oui</button>
-                <button type="submit" class="btn btn-info">Non</button>
             </form>
+            <button type="button" class="btn btn-info" onclick="window.history.back();">Non</button>
         </div>
 <?php
 require_once ('../template/footer.php');

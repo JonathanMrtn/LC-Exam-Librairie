@@ -38,7 +38,7 @@ require_once ('../template/header.php');
                     <p>Année de publication : <?= htmlspecialchars($book['date_publication']); ?></p>
                     <p>ISBN : <?= htmlspecialchars($book['isbn']); ?></p>
                     <!-- Ajoutez l'URL de l'image ici -->
-                    <p>URL de l'image : <?= htmlspecialchars($book['photo_url']); ?></p>
+                    <p>URL de l'image : <a href='<?= htmlspecialchars($book['photo_url']); ?>'><?= htmlspecialchars($book['photo_url']); ?></a></p>
                     <!-- Autres détails du livre à afficher ici -->
                 <?php else : ?>
                     <p>Livre non trouvé</p>

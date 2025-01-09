@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Si aucune erreur de validation n'est présente
     if (empty($errors)) {
-        $query = "INSERT INTO livres (titre, auteur, description, date_publication, isbn, photo_url) VALUES (:title, :author, :description, :date_publication, :isbn, :photo_url)";
+        $query = "INSERT INTO livres (titre, auteur, description, date_publication, isbn, photo_url, statut) VALUES (:title, :author, :description, :date_publication, :isbn, :photo_url, 'disponible')";
         $stmt = $pdo->prepare($query);
         $stmt->execute(array(
             ':title' => $title,

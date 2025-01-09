@@ -94,7 +94,11 @@ require_once('../template/header.php');
                     echo "<td>{$row['titre']}</td>";
                     echo "<td>{$row['auteur']}</td>";
                     echo "<td>{$row['date_publication']}</td>";
-                    echo "<td>{$row['statut']}</td>";
+                    if ($row['statut'] === 'disponible') {
+                        echo '<td style="color: green;">Disponible</td>';
+                    } else {
+                        echo '<td style="color: orange;">Emprunté</td>';
+                    }
                     // echo '<td><a href="../emprunt/add_emprunt.php?id_livre=' . $row['id'] . '">Faire un emprunt</a></td>';
                     if ($row['statut'] === 'disponible') {
                         echo '<td><a class="btn btn-primary" href="../emprunt/add_emprunt.php?id_livre=' . $row['id'] . '">Faire un emprunt</a></td>';

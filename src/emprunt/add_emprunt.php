@@ -20,8 +20,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Collectez les données du formulaire
     $id_utilisateur = $_POST['id_utilisateur'];
     $id_livre = $_POST['id_livre'];
-    $description = $_POST['description'];
-
+    if (empty($_POST['description'])) {
+        $description = null;
+    } else {
+        $description = $_POST['description'];
+    }
 
     // Effectuez des validations (assurez-vous que les données sont correctes)
     if (empty($id_utilisateur)) {
@@ -45,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         else
         {
+            var_dump($description);exit;
             $query = "INSERT INTO emprunts (date_emprunt, id_utilisateur, id_livre, signalement, description) VALUES (NOW(), :id_utilisateur, :id_livre, 0, :description)";
             $stmt = $pdo->prepare($query);
             $stmt->execute(array(

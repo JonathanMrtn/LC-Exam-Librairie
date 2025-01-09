@@ -36,18 +36,27 @@ if ($_SESSION['role'] == 'admin') {
     $resultTotalBooksAdmin = $stmtTotalBooksAdmin->fetch(PDO::FETCH_ASSOC);
 }
 
+// il faut rajouter une requête permettant de connaître le nombre d'emprunt de l'utilisateur connecté qui sont dépassé de plus de 30 jours
+// Récupérer le nombre d'emprunt dépassé de plus de 30 jours
+$queryTotalEmpruntsDepasse = "SELECT COUNT(*) as total_emprunts_depasse FROM emprunts WHERE id_utilisateur = :id_utilisateur AND date_emprunt < DATE_SUB(NOW(), INTERVAL 30 DAY)";
+$stmtTotalEmpruntsDepasse = $pdo->prepare($queryTotalEmpruntsDepasse);
+$stmtTotalEmpruntsDepasse->execute(array(':id_utilisateur' => $_SESSION['user_id']));
+$resultTotalEmpruntsDepasse = $stmtTotalEmpruntsDepasse->fetch(PDO::FETCH_ASSOC);
+
+$titre = "Dashboard";
 require_once('../template/header.php');
 ?>
         <div class="wrapper">
             <!-- Page Content -->
             <div id="content">
                 <div class="container">
-                    
-                    <!-- Votre contenu principal va ici -->
-                    <div id="content">
-                    <h1>Dashboard</h1>
-                    <div class="container">
-            
+                    <?php
+                    if ($resultTotalEmpruntsDepasse['total_emprunts_depasse'] > 0) {
+                        echo "<div class='alert alert-warning'>
+                                Vous avez " . $resultTotalEmpruntsDepasse['total_emprunts_depasse'] . " emprunt(s) dépassé(s) de plus de 30 jours. Veuillez les rendre dès que possible.
+                              </div>";
+                    }
+                    ?>
                     <?php
                     if ($_SESSION['role'] == 'admin') {
                         echo "<h2>Statistiques Administrateur</h2>";

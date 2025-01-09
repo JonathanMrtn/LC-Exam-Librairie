@@ -27,6 +27,8 @@ include('../template/header.php');
                 <div class="card-body">
                     <p><strong>Nom :</strong> <?php echo $userInfo['nom']; ?></p>
                     <p><strong>Email :</strong> <?php echo $userInfo['email']; ?></p>
+                    <p><strong>Rôle :</strong> <?php echo $userInfo['role']; ?></p>
+                    <p><strong>Date d'inscription :</strong> <?php echo date('d/m/Y', strtotime($userInfo['date_inscription'])); ?></p>
                     <!-- Affichez d'autres informations du profil ici -->
                     <button class="btn btn-primary" onclick="window.location.href ='edit_profile.php'">Modifier le Profil</button>
                     <button class="btn btn-secondary" onclick="window.location.href ='../../index.php'">Retour à l'accueil</button>

@@ -74,14 +74,14 @@ require_once('../template/header.php');
             require('../../config.php');
 
             if ($_SESSION['role'] === 'admin') {
-                echo "<p>Ce qui figure ici correspond à la liste de tous les emprunts.</p>";
+                echo "<p>Ce qui figure ici correspond à la liste de tous les emprunts de tous les utilisateur car vous êtes admin.</p>";
 
                 $query = "SELECT * FROM emprunts";
                 $stmt = $pdo->query($query);
             }
             else
             {
-                echo "<p>Ce qui figure ici correspond à la liste de vos emprunts en cours.</p>";
+                echo "<p>Ce qui figure ici correspond à la liste de vos emprunts en cours en tant qu'utilisateur authentifié.</p>";
                 $query = "SELECT * FROM emprunts WHERE id_utilisateur = :id";
                 $stmt = $pdo->prepare($query);
                 $stmt->execute(array(':id' => $_SESSION['user_id']));
@@ -89,7 +89,7 @@ require_once('../template/header.php');
 
             if ($stmt) {
                 echo "<table>";
-                echo "<tr><th>Utilisateur</th><th>Livre</th><th>Date d'emprunt</th><th>Description</th><th>Rendu livre</th></tr>";
+                echo "<tr><th>Utilisateur</th><th>Livre</th><th>Date d'emprunt</th><th>Date rendu prévue</th><th>Description</th><th>Actions</th></tr>";
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo "<tr>";
                     $query = "SELECT * FROM utilisateurs WHERE id = :id";
@@ -112,20 +112,33 @@ require_once('../template/header.php');
                         echo "<td>Livre inconnu, >Auteur inconnu, Date de publication inconnue</td>";
                     }
                     $date_emprunt = new DateTime($row['date_emprunt']);
+                    $date_rendu = $date_emprunt->add(new DateInterval('P30D'));
                     $date_actuelle = new DateTime();
-                    $interval = $date_emprunt->diff($date_actuelle);
-                    if ($interval->days > 30) {
-                        $style = 'color: red;';
-                    } elseif ($interval->days > 15) {
-                        $style = 'color: orange;';
+                    $intervalDateEmprunt = $date_emprunt->diff($date_actuelle);
+                    if ($intervalDateEmprunt->days > 30) {
+                        $styleDateEmprunt = 'color: red;';
+                    } elseif ($intervalDateEmprunt->days > 15) {
+                        $styleDateEmprunt = 'color: orange;';
                     } else {
-                        $style = 'color: green;';
+                        $styleDateEmprunt = 'color: green;';
                     }
-                    echo "<td style='{$style}'>{$row['date_emprunt']}</td>";
+
+                    $intervalDateRendu = $date_rendu->diff($date_actuelle);
+                    
+                    if ($intervalDateRendu->days > 30) {
+                        $styleDateRendu = 'color: red;';
+                    } elseif ($intervalDateRendu->days > 15) {
+                        $styleDateRendu = 'color: orange;';
+                    } else {
+                        $styleDateRendu = 'color: green;';
+                    }
+
+                    echo "<td style='{$styleDateEmprunt}'>" . $date_emprunt->format('d/m/Y H:i:s') . "</td>";
+                    echo "<td style='{$styleDateRendu}'>" . $date_rendu->format('d/m/Y') . "</td>";
                     echo "<td>{$row['description']}</td>";
-                    if ($interval->days > 30) {
+                    if ($intervalDateEmprunt->days > 30) {
                         echo "<td><button class='btn btn-danger' title='Vous êtes en retard sur votre rendu !' onclick=\"window.location.href = 'return_emprunt.php?emprunt_id={$row['id']}'\">Rendre le livre</button></td>";
-                    } elseif ($interval->days < 2) {
+                    } elseif ($intervalDateEmprunt->days < 2) {
                         echo "<td><button class='btn btn-secondary' title='Vous ne pouvez pas rendre un livre avant 2 jours' disabled>Rendre le livre</button></td>";
                     } else {
                         echo "<td><button class='btn btn-primary' title='Vous pouvez rendre le livre' onclick=\"window.location.href = 'return_emprunt.php?emprunt_id={$row['id']}'\">Rendre le livre</button></td>";
